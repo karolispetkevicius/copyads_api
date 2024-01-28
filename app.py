@@ -37,7 +37,7 @@ def extract_text(image_data):
     detected_text = [detection[1] for detection in result]
     easyocr_coordinates = [detection[0] for detection in result]
 
-    # Return the extracted text and coordinates in a tuple
+    # Return the extracted text and coordinates
     return detected_text, easyocr_coordinates
 
 
@@ -65,13 +65,6 @@ def remove_text(image_data, text_detections):
     return cropped_image
 
 
-'''
-def save_image(image, filename):
-    # Convert RGBA image to RGB before saving as JPEG
-    if image.mode == 'RGBA':
-        image = image.convert('RGB')
-    image.save(filename)
-'''
 
 
 @app.post("/image_to_text")
@@ -88,7 +81,6 @@ async def image_to_text(request: ImageRequest):
             # Extract text from the original image using EasyOCR
             detected_text, easyocr_coordinates = extract_text(original_image_data)
 
-            # Image without text
             image_without_text = remove_text(original_image_data, easyocr_coordinates)
 
             
@@ -115,7 +107,7 @@ async def image_to_text(request: ImageRequest):
             }
 
             processed_images.append(response_data)
-            print(processed_images)
+            #print(processed_images)
 
 
 
